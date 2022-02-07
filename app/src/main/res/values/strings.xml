@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Birds</string>
+    <string name="enemy">Enemigos</string>
+    <string name="coins">Monedas</string>
+    <string name="player">Player</string>
+    <string name="info">El personaje necesita alcanzar las 100 monedas para escapar de sus enemigos.\nPuedes ayudarlo?</string>
+    <string name="play">Jugar</string>
+</resources>
