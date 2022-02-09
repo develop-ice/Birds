@@ -1,6 +1,7 @@
 package com.android.birds;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -19,13 +20,17 @@ public class GameActivity extends AppCompatActivity {
     private boolean touchControl = false;
     private boolean beginControl = false;
     // Run
-    private Runnable runnable;
-    private Handler handler;
+    private Runnable runnable, runnableTmp;
+    private Handler handler, handlerTmp;
     // Positions
     private int playerX, enemy1X, enemy2X, enemy3X, coin1X, coin2X;
     private int playerY, enemy1Y, enemy2Y, enemy3Y, coin1Y, coin2Y;
     // Screen dimens
     private int screenWidth, screenHeight;
+    // Hart remaining
+    private int hart = 3;
+    // Score
+    private int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +69,8 @@ public class GameActivity extends AppCompatActivity {
 
                             moveEnemies();
 
-                            handler.postDelayed(runnable, 20);
+                            collisionControl();
+
                         }
                     };
                     handler.post(runnable);
@@ -83,6 +89,136 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
+    private void collisionControl() {
+        /**
+         * Enemy 1
+         */
+        int centerEnemy1X = enemy1X + enemy1.getWidth() / 2;
+        int centerEnemy1Y = enemy1Y + enemy1.getHeight() / 2;
+
+        if (centerEnemy1X >= playerX
+                && centerEnemy1X <= (playerX + player.getWidth())
+                && centerEnemy1Y >= playerY
+                && centerEnemy1Y <= (playerY + player.getHeight())) {
+
+            enemy1X = screenWidth + 200;
+            hart--;
+        }
+        /**
+         * Enemy 2
+         */
+        int centerEnemy2X = enemy2X + enemy2.getWidth() / 2;
+        int centerEnemy2Y = enemy2Y + enemy2.getHeight() / 2;
+
+        if (centerEnemy2X >= playerX
+                && centerEnemy2X <= (playerX + player.getWidth())
+                && centerEnemy2Y >= playerY
+                && centerEnemy2Y <= (playerY + player.getHeight())) {
+
+            enemy2X = screenWidth + 200;
+            hart--;
+        }
+        /**
+         * Enemy 3
+         */
+        int centerEnemy3X = enemy3X + enemy3.getWidth() / 2;
+        int centerEnemy3Y = enemy3Y + enemy3.getHeight() / 2;
+
+        if (centerEnemy3X >= playerX
+                && centerEnemy3X <= (playerX + player.getWidth())
+                && centerEnemy3Y >= playerY
+                && centerEnemy3Y <= (playerY + player.getHeight())) {
+
+            enemy3X = screenWidth + 200;
+            hart--;
+        }
+        /**
+         * Coin 1
+         */
+        int centerCoin1X = coin1X + coin1.getWidth() / 2;
+        int centerCoin1Y = coin1Y + coin1.getHeight() / 2;
+
+        if (centerCoin1X >= playerX
+                && centerCoin1X <= (playerX + player.getWidth())
+                && centerCoin1Y >= playerY
+                && centerCoin1Y <= (playerY + player.getHeight())) {
+
+            coin1X = screenWidth + 200;
+            score = score + 10;
+            tvCoinCount.setText("" + score);
+        }
+        /**
+         * Coin 2
+         */
+        int centerCoin2X = coin2X + coin2.getWidth() / 2;
+        int centerCoin2Y = coin2Y + coin2.getHeight() / 2;
+
+        if (centerCoin2X >= playerX
+                && centerCoin2X <= (playerX + player.getWidth())
+                && centerCoin2Y >= playerY
+                && centerCoin2Y <= (playerY + player.getHeight())) {
+
+            coin2X = screenWidth + 200;
+            score = score + 10;
+            tvCoinCount.setText("" + score);
+        }
+
+        /**
+         * GAME OVER
+         */
+        if (hart > 0 && score < 100) { // LIFE
+            if (hart == 2) {
+                hart1.setImageResource(R.drawable.ic_favorite_gray);
+            }
+            if (hart == 1) {
+                hart2.setImageResource(R.drawable.ic_favorite_gray);
+            }
+            handler.postDelayed(runnable, 20);
+
+        } else if (score >= 100) { // WIN
+
+            handler.removeCallbacks(runnable);
+            container.setEnabled(false);
+            tvInfo.setVisibility(View.VISIBLE);
+            tvInfo.setText("Wiiiiii \nHas ganado el juego");
+
+            enemy1.setVisibility(View.GONE);
+            enemy2.setVisibility(View.GONE);
+            enemy3.setVisibility(View.GONE);
+            coin1.setVisibility(View.GONE);
+            coin2.setVisibility(View.GONE);
+
+            handlerTmp = new Handler();
+            runnableTmp = new Runnable() {
+                @Override
+                public void run() {
+                    playerX = playerX + (screenWidth / 300);
+                    player.setX(playerX);
+                    player.setY(screenHeight / 2f);
+                    if (playerX <= screenWidth) {
+                        handlerTmp.postDelayed(runnableTmp, 20);
+                    } else {
+                        handlerTmp.removeCallbacks(runnableTmp);
+                        Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+                        intent.putExtra("SCORE", score);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            };
+            handlerTmp.post(runnableTmp);
+
+        } else if (hart == 0) { // LOST
+            handler.removeCallbacks(runnable);
+            hart3.setImageResource(R.drawable.ic_favorite_gray);
+            Intent intent = new Intent(GameActivity.this, ResultActivity.class);
+            intent.putExtra("SCORE", score);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private void moveEnemies() {
 
         enemy1.setVisibility(View.VISIBLE);
@@ -91,7 +227,9 @@ public class GameActivity extends AppCompatActivity {
         coin1.setVisibility(View.VISIBLE);
         coin2.setVisibility(View.VISIBLE);
 
-        // Enemy 1
+        /**
+         * Enemy 1
+         */
         enemy1X = enemy1X - (screenWidth / 150);
 
         if (enemy1X < 0) {
@@ -110,7 +248,9 @@ public class GameActivity extends AppCompatActivity {
         enemy1.setX(enemy1X);
         enemy1.setY(enemy1Y);
 
-        // Enemy 2
+        /**
+         * Enemy 2
+         */
         enemy2X = enemy2X - (screenWidth / 140);
 
         if (enemy2X < 0) {
@@ -129,7 +269,9 @@ public class GameActivity extends AppCompatActivity {
         enemy2.setX(enemy2X);
         enemy2.setY(enemy2Y);
 
-        // Enemy 3
+        /**
+         * Enemy 3
+         */
         enemy3X = enemy3X - (screenWidth / 130);
 
         if (enemy3X < 0) {
@@ -148,7 +290,9 @@ public class GameActivity extends AppCompatActivity {
         enemy3.setX(enemy3X);
         enemy3.setY(enemy3Y);
 
-        // Coin 1
+        /**
+         * Coin 1
+         */
         coin1X = coin1X - (screenWidth / 120);
 
         if (coin1X < 0) {
@@ -167,7 +311,9 @@ public class GameActivity extends AppCompatActivity {
         coin1.setX(coin1X);
         coin1.setY(coin1Y);
 
-        // Coin 2
+        /**
+         * Coin 2
+         */
         coin2X = coin2X - (screenWidth / 110);
 
         if (coin2X < 0) {
