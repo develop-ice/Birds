@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/background"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.android.birds.MainActivity">
@@ -38,7 +38,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_volume_up"
+                app:srcCompat="@drawable/player"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -62,7 +62,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_volume_up"
+                app:srcCompat="@drawable/coin"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -86,7 +86,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_volume_up"
+                app:srcCompat="@drawable/enemy3"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -110,7 +110,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_volume_up"
+                app:srcCompat="@drawable/enemy2"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -134,7 +134,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:padding="8dp"
-                app:srcCompat="@drawable/ic_volume_up"
+                app:srcCompat="@drawable/enemy1"
                 tools:ignore="ContentDescription" />
 
             <TextView

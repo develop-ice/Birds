@@ -23,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Audio setup
+        mediaPlayer = MediaPlayer.create(this, R.raw.audio);
+
         initViews();
 
         startAnimation();
-
-        startAudio();
 
         onClickVolume();
 
@@ -38,11 +39,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        // Audio setup
-        mediaPlayer = MediaPlayer.create(this, R.raw.audio);
         mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.pause();
     }
 
     private void onClickVolume() {
@@ -69,12 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.reset();
                 volume.setImageResource(R.drawable.ic_volume_up);
                 startActivity(new Intent(MainActivity.this, GameActivity.class));
+                finish();
             }
         });
-    }
-
-    private void startAudio() {
-
     }
 
     private void startAnimation() {

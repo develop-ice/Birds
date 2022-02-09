@@ -26,16 +26,17 @@ public class ResultActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("score", MODE_PRIVATE);
         int highestScore = preferences.getInt("highestScore", 0);
 
-        tvRecord.setText("Record: " + highestScore);
-
         if (score >= 100) {
             tvInfo.setText("Felicidades, has ganado");
             preferences.edit().putInt("highestScore", score).apply();
+            tvRecord.setText("Record: " + score);
         } else if (score >= highestScore) {
             tvInfo.setText("Lo siento, perdiste el juego");
             preferences.edit().putInt("highestScore", score).apply();
+            tvRecord.setText("Record: " + score);
         } else {
             tvInfo.setText("Lo siento, perdiste el juego");
+            tvRecord.setText("Record: " + highestScore);
         }
 
         btnRetry.setOnClickListener(new View.OnClickListener() {

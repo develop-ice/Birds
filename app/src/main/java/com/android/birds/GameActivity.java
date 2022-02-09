@@ -2,6 +2,8 @@ package com.android.birds;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -31,11 +33,19 @@ public class GameActivity extends AppCompatActivity {
     private int hart = 3;
     // Score
     private int score = 0;
+    // Sound
+    private SoundPool soundPool;
+    private int soundCoin, soundLose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        // Sound
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        soundCoin = soundPool.load(this, R.raw.coinsplash, 0);
+        soundLose = soundPool.load(this, R.raw.ouch, 1);
 
         initViews();
 
@@ -102,6 +112,7 @@ public class GameActivity extends AppCompatActivity {
                 && centerEnemy1Y >= playerY
                 && centerEnemy1Y <= (playerY + player.getHeight())) {
 
+            soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy1X = screenWidth + 200;
             hart--;
         }
@@ -116,6 +127,7 @@ public class GameActivity extends AppCompatActivity {
                 && centerEnemy2Y >= playerY
                 && centerEnemy2Y <= (playerY + player.getHeight())) {
 
+            soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy2X = screenWidth + 200;
             hart--;
         }
@@ -130,6 +142,7 @@ public class GameActivity extends AppCompatActivity {
                 && centerEnemy3Y >= playerY
                 && centerEnemy3Y <= (playerY + player.getHeight())) {
 
+            soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy3X = screenWidth + 200;
             hart--;
         }
@@ -144,6 +157,7 @@ public class GameActivity extends AppCompatActivity {
                 && centerCoin1Y >= playerY
                 && centerCoin1Y <= (playerY + player.getHeight())) {
 
+            soundPool.play(soundCoin, 1, 1, 0, 0, 1);
             coin1X = screenWidth + 200;
             score = score + 10;
             tvCoinCount.setText("" + score);
@@ -159,6 +173,7 @@ public class GameActivity extends AppCompatActivity {
                 && centerCoin2Y >= playerY
                 && centerCoin2Y <= (playerY + player.getHeight())) {
 
+            soundPool.play(soundCoin, 1, 1, 0, 0, 1);
             coin2X = screenWidth + 200;
             score = score + 10;
             tvCoinCount.setText("" + score);
