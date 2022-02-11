@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
     // UI
-    private ImageView player, coin1, coin2, enemy1, enemy2, enemy3, hart1, hart2, hart3;
+    private ImageView player, coin1, coin2, enemy1, enemy2, enemy3, heart1, heart2, heart3;
     private TextView tvInfo, tvCoinCount;
     private ConstraintLayout container;
     // Touch
@@ -29,8 +29,8 @@ public class GameActivity extends AppCompatActivity {
     private int playerY, enemy1Y, enemy2Y, enemy3Y, coin1Y, coin2Y;
     // Screen dimens
     private int screenWidth, screenHeight;
-    // Hart remaining
-    private int hart = 3;
+    // Heart remaining
+    private int heart = 3;
     // Score
     private int score = 0;
     // Sound
@@ -114,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
 
             soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy1X = screenWidth + 200;
-            hart--;
+            heart--;
         }
         /**
          * Enemy 2
@@ -129,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
 
             soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy2X = screenWidth + 200;
-            hart--;
+            heart--;
         }
         /**
          * Enemy 3
@@ -144,7 +144,7 @@ public class GameActivity extends AppCompatActivity {
 
             soundPool.play(soundLose, 1, 1, 1, 0, 1);
             enemy3X = screenWidth + 200;
-            hart--;
+            heart--;
         }
         /**
          * Coin 1
@@ -182,12 +182,12 @@ public class GameActivity extends AppCompatActivity {
         /**
          * GAME OVER
          */
-        if (hart > 0 && score < 100) { // LIFE
-            if (hart == 2) {
-                hart1.setImageResource(R.drawable.ic_favorite_gray);
+        if (heart > 0 && score < 100) { // LIFE
+            if (heart == 2) {
+                heart1.setImageResource(R.drawable.ic_favorite_gray);
             }
-            if (hart == 1) {
-                hart2.setImageResource(R.drawable.ic_favorite_gray);
+            if (heart == 1) {
+                heart2.setImageResource(R.drawable.ic_favorite_gray);
             }
             handler.postDelayed(runnable, 20);
 
@@ -224,9 +224,9 @@ public class GameActivity extends AppCompatActivity {
             };
             handlerTmp.post(runnableTmp);
 
-        } else if (hart == 0) { // LOST
+        } else if (heart == 0) { // LOST
             handler.removeCallbacks(runnable);
-            hart3.setImageResource(R.drawable.ic_favorite_gray);
+            heart3.setImageResource(R.drawable.ic_favorite_gray);
             Intent intent = new Intent(GameActivity.this, ResultActivity.class);
             intent.putExtra("SCORE", score);
             startActivity(intent);
@@ -376,9 +376,9 @@ public class GameActivity extends AppCompatActivity {
         enemy1 = findViewById(R.id.img_enemy_1);
         enemy2 = findViewById(R.id.img_enemy_2);
         enemy3 = findViewById(R.id.img_enemy_3);
-        hart1 = findViewById(R.id.imgHart1);
-        hart2 = findViewById(R.id.imgHart2);
-        hart3 = findViewById(R.id.imgHart3);
+        heart1 = findViewById(R.id.imgHeart1);
+        heart2 = findViewById(R.id.imgHeart2);
+        heart3 = findViewById(R.id.imgHeart3);
         tvInfo = findViewById(R.id.tv_info);
         tvCoinCount = findViewById(R.id.tv_coin);
         container = findViewById(R.id.container);

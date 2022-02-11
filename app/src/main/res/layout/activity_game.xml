@@ -117,21 +117,21 @@
         tools:visibility="visible">
 
         <ImageView
-            android:id="@+id/imgHart1"
+            android:id="@+id/imgHeart1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_favorite" />
 
         <ImageView
-            android:id="@+id/imgHart2"
+            android:id="@+id/imgHeart2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_favorite" />
 
         <ImageView
-            android:id="@+id/imgHart3"
+            android:id="@+id/imgHeart3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
